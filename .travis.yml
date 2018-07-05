@@ -1,4 +1,11 @@
 language: node_js
 node_js: node
 services:
-  - mongodb
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: EsO6o6ufiO5eplggSCrDlp32LZp8XEOqmlpiSPy6JKxekoLBTbDQxREkH1W8DC975mGypyRG5jXDhuEkcgfIDvXmViiIdIBJd7jBiY30B0AHStwDOLUhMkfB26hrmI2BNH3d0XogjGBCgNkawGiWKp4ylv8aUTwUkOeVRflNx6ZFZTJwU523/mEwMEckJowsXAOQa8y9LAJZEF0NOXnh6QFOuvrDMohN2bW9jxzvKkDBAwRynCJjliTZwqNH5aXcTUgIEUmlnXnSD+2RlvL6dp1ZKZJ+6nx1m60w1IZ55yC/kkxiRIk3kwy6lvQR2cwoIWqNIVasmJLwA0B9XQqXvtaIi0+c6HXli6/qgO+1WQzisSufZU0I8f2Og9TeMrbrlH0ls6AdPs3uwKBq8FDbCQhNMyA/6kGnpb8xYkM2ZXP6IuoPrxI0uXbASgynkG1pXqmp3M116KFNhnO/K7AyD3P+bJic+K+f+oCiUUi9aoGedKefP5jALZCpqRrAraingyU+5zdUCEK0Hh5P0oMPyLItLT872lTmE8XHishHW+6kap7zgYNFawACTRdtKAqjFticpmyvkHmf+DmvkYW+eik8lOoFnitwzjoiZb+pBBOriGukKr5gXiAXMr0FYyCfA1gY2/mcjuvAmygSejCE+PzEnRvGzaE3jk6Rfg7AzfY=
+  app: quiet-brushlands-87414
+  on:
+    repo: philipLutz/jam-api
