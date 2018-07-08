@@ -16,7 +16,8 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  email: {type: String, default: ''}
+  email: {type: String, default: ''},
+  jamEvents: {type: Array}
 });
 
 UserSchema.methods.serialize = function() {
