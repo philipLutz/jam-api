@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 
 const jamSchema = new mongoose.Schema({
 	userHost: { type: String, required: true },
-	jamDate: { type: String, required: true },
+	jamDate: { type: Date, required: true },
 	jamTime: { type: String, required: true },
 	style: { type: String, required: true },
 	location: { type: String, required: true },
