@@ -45,12 +45,11 @@ router.get('/:id', jwtAuth, (req, res) => {
 		});
 });
 
-// GET all jams that a user has created.
+// GET all jams that a user has attended or is attending.
 
-router.get('/:userHost', jwtAuth, (req, res) => {
+router.get('/:username', jwtAuth, (req, res) => {
 	Jam
-		.find({user: req.user.username})
-		.find({userHost: req.params.userHost})
+		.find({attendees: req.params.username})
 		.sort({jamDate: 1})
 		.then(jams => res.json(jams))
 		.catch(err => {
@@ -70,7 +69,8 @@ router.post('/', jwtAuth, (req, res) => {
 			jamTime: req.body.jamTime,
 			style: req.body.style,
 			location: req.body.location,
-			instruments: req.body.instruments
+			instruments: req.body.instruments,
+			attendees: req.user.username
 		})
 		.then(jam => res.status(201).json(jam))
 		.catch(err => {
@@ -79,7 +79,7 @@ router.post('/', jwtAuth, (req, res) => {
 		});
 });
 
-// PUT userHost changes information about a jam.
+// PUT edit information about a jam by _id.
 
 router.put('/:id', jwtAuth, (req, res) => {
 	Jam
@@ -88,7 +88,8 @@ router.put('/:id', jwtAuth, (req, res) => {
 			jamTime: `${req.body.jamTime}`,
 			style: `${req.body.style}`,
 			location: `${req.body.location}`,
-			instruments: `${req.body.instruments}`
+			instruments: `${req.body.instruments}`,
+			attendees: `${req.body.attendees}`
 		}})
 		.then(updatedJam => res.status(201).json(updatedJam))
 		.catch(err => {

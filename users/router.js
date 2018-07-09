@@ -148,16 +148,4 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-// GET all jams that a user has been to or going to.
-
-// router.get('/:username', jwtAuth, (req, res) => {
-
-// })
-
-// PUT attendee plans to go to a jam.
-
-// DELETE user from a jam (attendee isn't going to show up).
-
-
-
 module.exports = {router};
