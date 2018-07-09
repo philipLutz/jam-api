@@ -10,7 +10,7 @@ const jsonParser = bodyParser.json();
 
 // Post to register a new user
 router.post('/', jsonParser, (req, res) => {
-  const requiredFields = ['username', 'password','email','firstName','lastName'];
+  const requiredFields = ['username', 'password','email','firstName','lastName','bio'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
   if (missingField) {
@@ -22,7 +22,7 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'password', 'firstName', 'lastName', 'email'];
+  const stringFields = ['username', 'password', 'firstName', 'lastName', 'email', 'bio'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -92,12 +92,13 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  let {username, password, firstName = '', lastName = '', email = ''} = req.body;
+  let {username, password, firstName = '', lastName = '', email = '', bio = ''} = req.body;
   // Username and password come in pre-trimmed, otherwise we throw an error
   // before this
   firstName = firstName.trim();
   lastName = lastName.trim();
   email = email.trim();
+  bio = bio.trim();
 
   return User.find({username})
     .count()
@@ -120,7 +121,8 @@ router.post('/', jsonParser, (req, res) => {
         password: hash,
         firstName,
         lastName,
-        email
+        email,
+        bio
       });
     })
     .then(user => {
@@ -145,5 +147,17 @@ router.get('/', (req, res) => {
     .then(users => res.json(users.map(user => user.serialize())))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
+
+// GET all jams that a user has been to or going to.
+
+// router.get('/:username', jwtAuth, (req, res) => {
+
+// })
+
+// PUT attendee plans to go to a jam.
+
+// DELETE user from a jam (attendee isn't going to show up).
+
+
 
 module.exports = {router};
