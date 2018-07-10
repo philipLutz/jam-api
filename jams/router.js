@@ -22,7 +22,6 @@ const {User} = require('../users/models');
 
 router.get('/', jwtAuth, (req, res) => {
 	const currentDate = Date.now();
-	currentDate.setHours(0,0,0,0);
 	Jam
 		.find({jamDate: {$gte: currentDate}})
 		.sort({jamDate: -1})
@@ -47,7 +46,7 @@ router.get('/:id', jwtAuth, (req, res) => {
 
 // GET all jams that a user has attended or is attending.
 
-router.get('/:username', jwtAuth, (req, res) => {
+router.get('/:attendee', jwtAuth, (req, res) => {
 	Jam
 		.find({attendees: req.params.username})
 		.sort({jamDate: 1})
@@ -83,13 +82,16 @@ router.post('/', jwtAuth, (req, res) => {
 
 router.put('/:id', jwtAuth, (req, res) => {
 	Jam
-		.findByIdAndUpdate(req.params.id, {$set: {
+		.update({_id: req.params.id}, 
+			{$addToSet: {
+			attendees: `${req.body.attendees}`
+		},
+			$set: {
 			jamDate: `${req.body.jamDate}`,
 			jamTime: `${req.body.jamTime}`,
 			style: `${req.body.style}`,
 			location: `${req.body.location}`,
-			instruments: `${req.body.instruments}`,
-			attendees: `${req.body.attendees}`
+			instruments: `${req.body.instruments}`
 		}})
 		.then(updatedJam => res.status(201).json(updatedJam))
 		.catch(err => {
@@ -102,7 +104,7 @@ router.put('/:id', jwtAuth, (req, res) => {
 
 router.delete('/:id', jwtAuth, (req, res) => {
 	Jam
-		.findbyIdAndRemove(req.params.id)
+		.findByIdAndRemove(req.params.id)
 		.then(jam => {
 			console.log(`Deleted jam with id \`${req.params.id}\``);
 			res.status(204).json({message: 'success'});
