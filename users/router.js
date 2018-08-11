@@ -10,7 +10,7 @@ const jsonParser = bodyParser.json();
 
 // Post to register a new user
 router.post('/', jsonParser, (req, res) => {
-  const requiredFields = ['username', 'password','email','firstName','lastName','bio'];
+  const requiredFields = ['username', 'password','email','firstName','lastName'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
   if (missingField) {
@@ -22,7 +22,7 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'password', 'firstName', 'lastName', 'email', 'bio'];
+  const stringFields = ['username', 'password', 'firstName', 'lastName', 'email'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -92,13 +92,12 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  let {username, password, firstName = '', lastName = '', email = '', bio = ''} = req.body;
+  let {username, password, firstName = '', lastName = '', email = ''} = req.body;
   // Username and password come in pre-trimmed, otherwise we throw an error
   // before this
   firstName = firstName.trim();
   lastName = lastName.trim();
   email = email.trim();
-  bio = bio.trim();
 
   return User.find({username})
     .count()
@@ -121,8 +120,7 @@ router.post('/', jsonParser, (req, res) => {
         password: hash,
         firstName,
         lastName,
-        email,
-        bio
+        email
       });
     })
     .then(user => {

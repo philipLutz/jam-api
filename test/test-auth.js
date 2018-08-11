@@ -21,7 +21,6 @@ describe('Auth endpoints', function () {
   const firstName = 'Example';
   const lastName = 'User';
   const email = 'exampleEmail@gmail.com';
-  const bio = 'exampleBio';
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
@@ -38,8 +37,7 @@ describe('Auth endpoints', function () {
         password,
         firstName,
         lastName,
-        email,
-        bio
+        email
       })
     );
   });
@@ -116,8 +114,7 @@ describe('Auth endpoints', function () {
             username,
             firstName,
             lastName,
-            email,
-            bio
+            email
           });
         });
     });
@@ -146,8 +143,7 @@ describe('Auth endpoints', function () {
           username,
           firstName,
           lastName,
-          email,
-          bio
+          email
         },
         'wrongSecret',
         {
@@ -179,8 +175,7 @@ describe('Auth endpoints', function () {
             username,
             firstName,
             lastName,
-            email,
-            bio
+            email
           },
           exp: Math.floor(Date.now() / 1000) - 10 // Expired ten seconds ago
         },
@@ -214,8 +209,7 @@ describe('Auth endpoints', function () {
             username,
             firstName,
             lastName,
-            email,
-            bio
+            email
           }
         },
         JWT_SECRET,
@@ -243,8 +237,7 @@ describe('Auth endpoints', function () {
             username,
             firstName,
             lastName,
-            email,
-            bio
+            email
           });
           expect(payload.exp).to.be.at.least(decoded.exp);
         });

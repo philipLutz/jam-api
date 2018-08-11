@@ -48,7 +48,7 @@ router.get('/', jwtAuth, (req, res) => {
 
 router.get('/:username', jwtAuth, (req, res) => {
 	Jam
-		.find({attendees: req.user.username})
+		.find({attendees: req.params.username})
 		.sort({jamDate: 1})
 		.then(jams => res.json(jams))
 		.catch(err => {

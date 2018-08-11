@@ -22,7 +22,6 @@ describe('/api/jams', function() {
   	const firstName = 'Example';
   	const lastName = 'User';
   	const email = 'exampleEmail@gmail.com';
-  	const bio = 'exampleBio';
   	const userHost = 'exampleUserHost';
 	const jamDate = Date.now();
 	const jamTime = '8:30PM';
@@ -46,8 +45,7 @@ describe('/api/jams', function() {
         		password,
         		firstName,
         		lastName,
-        		email,
-        		bio
+        		email
       		})).then(function() {
       		Jam.create({
       			userHost,
