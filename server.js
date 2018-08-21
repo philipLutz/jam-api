@@ -14,7 +14,7 @@ const { User } = require('./users/models');
 
 mongoose.Promise = global.Promise;
 
-const { PORT, DATABASE_URL } = require('./config');
+const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require('./config');
 
 const app = express();
 
@@ -23,7 +23,6 @@ app.use(morgan('common'));
 
 // CORS
 const cors = require('cors');
-const {CLIENT_ORIGIN} = require('./config');
 
 app.use(
     cors({

@@ -14,19 +14,17 @@ const expect = chai.expect;
 // see: https://github.com/chaijs/chai-http
 chai.use(chaiHttp);
 
-describe('/api/user', function () {
+describe('/api/users', function () {
   const username = 'exampleUser';
   const password = 'examplePass';
   const firstName = 'Example';
   const lastName = 'User';
   const email = 'exampleEmail@gmail.com';
-  const bio = 'exampleBio';
   const usernameB = 'exampleUserB';
   const passwordB = 'examplePassB';
   const firstNameB = 'ExampleB';
   const lastNameB = 'UserB';
   const emailB = 'exampleEmailB@gmail.com';
-  const bioB = 'exampleBioB';
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
@@ -52,8 +50,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -78,8 +75,7 @@ describe('/api/user', function () {
             username,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -104,8 +100,7 @@ describe('/api/user', function () {
             username,
             password,
             firstName,
-            lastName,
-            bio
+            lastName
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -122,32 +117,6 @@ describe('/api/user', function () {
             expect(res.body.location).to.equal('email');
           });
       });
-      it('Should reject users with missing bio', function () {
-        return chai
-          .request(app)
-          .post('/api/users')
-          .send({
-            username,
-            password,
-            firstName,
-            lastName,
-            email
-          })
-          .then(() =>
-            expect.fail(null, null, 'Request should not succeed')
-          )
-          .catch(err => {
-            if (err instanceof chai.AssertionError) {
-              throw err;
-            }
-
-            const res = err.response;
-            expect(res).to.have.status(422);
-            expect(res.body.reason).to.equal('ValidationError');
-            expect(res.body.message).to.equal('Missing field');
-            expect(res.body.location).to.equal('bio');
-          });
-      });
       it('Should reject users with non-string username', function () {
         return chai
           .request(app)
@@ -157,8 +126,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -186,8 +154,7 @@ describe('/api/user', function () {
             password: 1234,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -215,8 +182,7 @@ describe('/api/user', function () {
             password,
             firstName: 1234,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -244,8 +210,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName: 1234,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -273,8 +238,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email: 1234,
-            bio
+            email: 1234
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -302,8 +266,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -331,8 +294,7 @@ describe('/api/user', function () {
             password: ` ${password} `,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -360,8 +322,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -389,8 +350,7 @@ describe('/api/user', function () {
             password: '123456789',
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -418,8 +378,7 @@ describe('/api/user', function () {
             password: new Array(73).fill('a').join(''),
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(() =>
             expect.fail(null, null, 'Request should not succeed')
@@ -445,8 +404,7 @@ describe('/api/user', function () {
           password,
           firstName,
           lastName,
-          email,
-          bio
+          email
         })
           .then(() =>
             // Try to create a second user with the same username
@@ -455,8 +413,7 @@ describe('/api/user', function () {
               password,
               firstName,
               lastName,
-              email,
-              bio
+              email
             })
           )
           .then(() =>
@@ -485,8 +442,7 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email,
-            bio
+            email
           })
           .then(res => {
             expect(res).to.have.status(201);
@@ -495,8 +451,7 @@ describe('/api/user', function () {
               'username',
               'firstName',
               'lastName',
-              'email',
-              'bio'
+              'email'
             );
             expect(res.body.username).to.equal(username);
             expect(res.body.firstName).to.equal(firstName);
@@ -524,8 +479,7 @@ describe('/api/user', function () {
             password,
             firstName: ` ${firstName} `,
             lastName: ` ${lastName} `,
-            email,
-            bio
+            email
           })
           .then(res => {
             expect(res).to.have.status(201);
@@ -534,8 +488,7 @@ describe('/api/user', function () {
               'username',
               'firstName',
               'lastName',
-              'email',
-              'bio'
+              'email'
             );
             expect(res.body.username).to.equal(username);
             expect(res.body.firstName).to.equal(firstName);
@@ -567,16 +520,14 @@ describe('/api/user', function () {
             password,
             firstName,
             lastName,
-            email,
-            bio
+            email
           },
           {
             username: usernameB,
             password: passwordB,
             firstName: firstNameB,
             lastName: lastNameB,
-            email: emailB,
-            bio: bioB
+            email: emailB
           }
         )
           .then(() => chai.request(app).get('/api/users'))
@@ -588,15 +539,13 @@ describe('/api/user', function () {
               username,
               firstName,
               lastName,
-              email,
-              bio
+              email
             });
             expect(res.body[1]).to.deep.equal({
               username: usernameB,
               firstName: firstNameB,
               lastName: lastNameB,
-              email: emailB,
-              bio: bioB
+              email: emailB
             });
           });
       });

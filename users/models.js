@@ -16,8 +16,7 @@ const UserSchema = mongoose.Schema({
   },
   firstName: {type: String, default: ''},
   lastName: {type: String, default: ''},
-  email: {type: String, default: ''},
-  bio: {type: String, required: true}
+  email: {type: String, default: ''}
 });
 
 UserSchema.methods.serialize = function() {
@@ -25,8 +24,7 @@ UserSchema.methods.serialize = function() {
     username: this.username || '',
     firstName: this.firstName || '',
     lastName: this.lastName || '',
-    email: this.email || '',
-    bio: this.bio || ''
+    email: this.email || ''
   };
 };
 

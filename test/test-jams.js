@@ -22,7 +22,6 @@ describe('/api/jams', function() {
   	const firstName = 'Example';
   	const lastName = 'User';
   	const email = 'exampleEmail@gmail.com';
-  	const bio = 'exampleBio';
   	const userHost = 'exampleUserHost';
 	const jamDate = Date.now();
 	const jamTime = '8:30PM';
@@ -46,8 +45,7 @@ describe('/api/jams', function() {
         		password,
         		firstName,
         		lastName,
-        		email,
-        		bio
+        		email
       		})).then(function() {
       		Jam.create({
       			userHost,
@@ -81,22 +79,35 @@ describe('/api/jams', function() {
           				expect(res.body).to.be.an('array');
           			});
   			});
-  			it('Should get a specific jam by id', function() {
-  				const token = jwt.sign({user: {username: 'exampleUserName'}}, JWT_SECRET, {expiresIn: 10000});
-  				let jamToFind;
-  				return Jam
-  					.findOne()
-  					.then(function(res) {
-  						jamToFind = res._id;
-  						return chai.request(app)
-  							.get(`/api/jams/${jamToFind}`)
-  							.set('Authorization', `Bearer ${token}`)
-  					})
-  					.then(function(res) {
-  						expect(res).to.have.status(200);
-  						expect(res).to.be.json;
-  					});
-  			});
+  			// it('Should get a specific jam by id', function() {
+  			// 	const token = jwt.sign({user: {username: 'exampleUserName'}}, JWT_SECRET, {expiresIn: 10000});
+  			// 	let jamToFind;
+  			// 	return Jam
+  			// 		.findOne()
+  			// 		.then(function(res) {
+  			// 			jamToFind = res._id;
+  			// 			return chai.request(app)
+  			// 				.get(`/api/jams/${jamToFind}`)
+  			// 				.set('Authorization', `Bearer ${token}`)
+  			// 		})
+  			// 		.then(function(res) {
+  			// 			expect(res).to.have.status(200);
+  			// 			expect(res).to.be.json;
+  			// 		});
+  			// });
+        // it('Should get all jams for a specific user', function() {
+        //   const token = jwt.sign({user: {username: 'exampleUserName'}}, JWT_SECRET, {expiresIn: 10000});
+        //   const username = 'exampleUserName';
+        //    return chai
+        //     .request(app)
+        //     .get(`/api/jams/${username}`)
+        //       .set('Authorization', `Bearer ${token}`)
+        //       .then(function(res) {
+        //         expect(res).to.have.status(200);
+        //         expect(res).to.be.json;
+        //         expect(res.attendees).to.include("exampleUserName");
+        //       });
+        // });
   		});
 
   		describe('POST', function() {

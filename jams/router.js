@@ -34,19 +34,19 @@ router.get('/', jwtAuth, (req, res) => {
 
 // GET a specific jam by _id.
 
-router.get('/:id', jwtAuth, (req, res) => {
-	Jam
-		.findById(req.params.id)
-		.then(jam => res.json(jam))
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({error: 'Internal server error, unable to find jam.'});
-		});
-});
+// router.get('/:id', jwtAuth, (req, res) => {
+// 	Jam
+// 		.findById(req.params.id)
+// 		.then(jam => res.json(jam))
+// 		.catch(err => {
+// 			console.error(err);
+// 			res.status(500).json({error: 'Internal server error, unable to find jam.'});
+// 		});
+// });
 
 // GET all jams that a user has attended or is attending.
 
-router.get('/:attendee', jwtAuth, (req, res) => {
+router.get('/:username', jwtAuth, (req, res) => {
 	Jam
 		.find({attendees: req.params.username})
 		.sort({jamDate: 1})
